@@ -1,0 +1,7 @@
+2016/6/20
+修改训练集合交叉验证集，按照不同人物来分割（通过get_driver_train_valid_label.py实现）
+weight_decay: 0.0002
+batch_size: 32
+base_lr: 0.001
+曲线图 imgs/figure_1.png
+效果较差，严重过拟合。
