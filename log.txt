@@ -1,7 +1,23 @@
 2016/6/20
-修改训练集合交叉验证集，按照不同人物来分割（通过get_driver_train_valid_label.py实现）
+1、修改训练集合交叉验证集，按照不同人物来分割（通过get_driver_train_valid_label.py实现）
 weight_decay: 0.0002
 batch_size: 32
 base_lr: 0.001
 曲线图 imgs/figure_1.png
 效果较差，严重过拟合。
+
+2016/6/21
+1、修改data_transformer.cpp 以及 caffe.proto 在图片输入的过程中扩大数据集
+learning rate:
+- fixed:　　 保持base_lr不变.
+- step: 　　 如果设置为step,则还需要设置一个stepsize,  返回 base_lr * gamma ^ (floor(iter / stepsize)),其中iter表示当前的迭代次数
+- exp:   　　返回base_lr * gamma ^ iter， iter为当前迭代次数
+- inv:　　    如果设置为inv,还需要设置一个power, 返回base_lr * (1 + gamma * iter) ^ (- power)
+- multistep: 如果设置为multistep,则还需要设置一个stepvalue。这个参数和step很相似，step是均匀等间隔变化，而multistep则是根据                                 stepvalue值变化
+- poly: 　　  学习率进行多项式误差, 返回 base_lr (1 - iter/max_iter) ^ (power)
+- sigmoid:　学习率进行sigmod衰减，返回 base_lr ( 1/(1 + exp(-gamma * (iter - stepsize))))
+
+
+2016/6/22
+1、输出过程中多次crop，然后对结果进行综合
+2、输出使用googleNet的三个输出层，对结果进行综合
